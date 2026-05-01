@@ -97,11 +97,6 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-
-
-
-
-
         // ===== Login button click =====
         loginButton.setOnClickListener {
             val email = emailInput.text.toString().trim()
@@ -148,9 +143,14 @@ class LoginActivity : AppCompatActivity() {
                                     Toast.makeText(this, "Account not found under $selectedRole role", Toast.LENGTH_SHORT).show()
                                 }
                             }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(this, "Error retrieving user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        } else {
+                            Toast.makeText(this, "Email not verified!", Toast.LENGTH_LONG).show()
                         }
                     } else {
-                        Toast.makeText(this, "Email not verified!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                     }
                 }
         }
